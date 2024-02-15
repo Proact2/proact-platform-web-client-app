@@ -13,7 +13,7 @@ env:
       REACT_APP_SIGNINUSERFLOW : ${{ secrets.REACT_APP_SIGNINUSERFLOW_PROD }} 
       REACT_APP_DOMAIN : ${{ secrets.REACT_APP_DOMAIN_PROD }} 
       REACT_APP_LOGINENDPOINT : ${{ secrets.REACT_APP_LOGINENDPOINT_PROD }} 
-      REACT_APP_SCOPES : ${{ secrets.REACT_APP_SCOPES_PROD }} 
+      REACT_APP_SCOPES : "https://proact2.onmicrosoft.com/api/access_as_user"
       REACT_APP_APIENDPOINT : ${{ secrets.REACT_APP_APIENDPOINT_PROD }} 
       
 jobs:
