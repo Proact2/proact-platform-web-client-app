@@ -1,11 +1,13 @@
 import { LogLevel } from "@azure/msal-browser";
 
+
+
 const devEnvironment = {
     clientId: "",
     signinUserFlow: "",
     domain: "",
     loginEndpoint: "",
-    scopes: [""]
+    scopes: ""
 }
 
 const prodEnvironment = {
@@ -13,25 +15,25 @@ const prodEnvironment = {
     signinUserFlow: "",
     domain: "",
     loginEndpoint: "",
-    scopes: [""]
+    scopes: ""
 }
 
 export const b2cPolicies = {
     names: {
-        signUpSignIn: prodEnvironment.signinUserFlow
+        signUpSignIn: process.env.REACT_APP_SIGNINUSERFLOW
     },
     authorities: {
         signUpSignIn: {
-            authority: prodEnvironment.loginEndpoint
+            authority: process.env.REACT_APP_LOGINENDPOINT
         }
     },
-    authorityDomain: prodEnvironment.domain
+    authorityDomain: process.env.REACT_APP_DOMAIN
 }
 
 
 export const msalConfig = {
     auth: {
-        clientId: prodEnvironment.clientId,
+        clientId: process.env.REACT_APP_CLIENTID,
         authority: b2cPolicies.authorities.signUpSignIn.authority,
         knownAuthorities: [b2cPolicies.authorityDomain], // Mark your B2C tenant's domain as trusted.
         redirectUri: "/", // You must register this URI on Azure Portal/App Registration. Defaults to window.location.origin
@@ -69,7 +71,7 @@ export const msalConfig = {
 
 export const protectedResources = {
     api: {
-        scopes: prodEnvironment.scopes
+        scopes: process.env.REACT_APP_SCOPES.split(", ")
     },
 }
 

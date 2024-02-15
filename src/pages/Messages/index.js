@@ -25,6 +25,7 @@ import { generateAnalysisPageUrl } from '../../helpers/externalUrlHelper';
 import SweetAlert from "react-bootstrap-sweetalert";
 import AuthorizedPage from '../../components/AuthorizedPage';
 import { Redirect } from 'react-router-dom';
+import { NewMessageToPatientModal } from './Modals/NewMessageToPatientModal';
 
 const Messages = (props) => {
 
@@ -33,7 +34,7 @@ const Messages = (props) => {
   const [pagingCount, setPagingCount] = useState(0);
   const [isbusy, setIsbusy] = useState(false);
   const [projectProperties, setProjectProperties] = useState();
-
+  const [isVideoEnabled, setIsVideoEnabled] = useState();
   const [nextPageButtonVisible, setNextPageButtonVisible] = useState(true);
   const [selectedMessageIdAttachment, setSelectedMessageIdAttachment] = useState();
   const [isAttachmentModalVisible, setIsAttachmentModalVisible] = useState(false);
@@ -42,6 +43,7 @@ const Messages = (props) => {
   const [isNewTextMessageModalVisible, setIsNewTextMessageModalVisible] = useState();
   const [isNewVoiceMessageModalVisible, setIsNewVoiceMessageModalVisible] = useState();
   const [isNewVideoMessageModalVisible, setIsNewVideoMessageModalVisible] = useState();
+  const [isNewMesageToPatientModalVisible, setIsNewMesageToPatientModalVisible] = useState(false);
 
   const [selectedMessageId, setSelectedMessageId] = useState();
   const [isNewTextReplyModalVisible, setIsNewTextReplyModalVisible] = useState(false);
@@ -165,8 +167,16 @@ const Messages = (props) => {
     setMessages(updatedMessages);
   }
 
-  function handleVideoMessage() {
+
+  const delay = async (ms) => {
+    return new Promise((resolve) => 
+        setTimeout(resolve, ms));
+  };
+
+  const handleVideoMessage = async (message) => {
+    await delay(40000);
     showSuccessToast(props.t("VideoMessageSentSuccessfullyAlert"));
+
   }
 
   function openTextReplyModal(originalMessage) {
@@ -209,7 +219,7 @@ const Messages = (props) => {
     var diffMs = today - messageDateTime;
     var diffMins = Math.floor((diffMs / 1000) / 60);
 
-    return diffMins > projectProperties.messageCanBeRepliedAfterMinutes;
+    return (projectProperties.messageCanBeRepliedAfterMinutes==0 || diffMins > projectProperties.messageCanBeRepliedAfterMinutes) ;
   }
 
   function handleNewReply(message) {
@@ -219,7 +229,7 @@ const Messages = (props) => {
 
     if (found && indexOfItemToUpdate !== -1) {
       var updatedMessages = messages.slice();
-      updatedMessages[indexOfItemToUpdate].replyMessages.unshift(message);
+      updatedMessages[indexOfItemToUpdate].replyMessages.push(message); // add reply at the end of the replies 
       setMessages(updatedMessages);
     }
     showSuccessToast(props.t("NewMessageAddedd"));
@@ -234,6 +244,7 @@ const Messages = (props) => {
 
   function handleProjectPropertiesSuccess(data) {
     setProjectProperties(data.properties);
+    setIsVideoEnabled(data.properties.isVideoRecordingActive);
   }
 
   function openAnalysisInAnalystConsole(message) {
@@ -319,20 +330,33 @@ const Messages = (props) => {
      { checkIfMessagingIsEnabled()}
 
       <Row >
-        <Col className='d-flex justify-content-between'>
+        <Col className='d-flex justify-content-start'>
           {
             userSession && userSession.isMedicalProfessional &&
+
+            <div className="d-flex align-items-center">
+            <div className="me-2">
             < Button
               color='success'
               onClick={() => setIsNewBroadcastMesageModalVisible(true)} >
               {props.t("NewBroadcastMessageButton")}
             </Button>
+            </div>
+            <div className="me-2">
+            < Button
+              color='info'
+              onClick={() => setIsNewMesageToPatientModalVisible(true)} >
+              {props.t("NewMessageToPatientButton")}
+            </Button>
+            </div>
+            </div>
           }
 
           {
             userSession && userSession.isPatient &&
             <NewMessageButtonsRow
               props={props}
+              isVideoEnabled={isVideoEnabled}
               onInfoMessageButtonClick={() => setIsNewInfoMessageModalVisible(true)}
               onTextMessageButtonClick={() => setIsNewTextMessageModalVisible(true)}
               onAudioMessageButtonClick={() => setIsNewVoiceMessageModalVisible(true)}
@@ -367,6 +391,7 @@ const Messages = (props) => {
                   onNewVoiceReplyClick={() => openVoiceReplyModal(message.originalMessage)}
                   onMessageDeleteButtonClick={() => handleDeleteButtonClick(message.originalMessage)}
                   onOpenAnalysis={() => openAnalysisInAnalystConsole(message)}
+                  showVideoReplyButton={userSession && isVideoEnabled}
                 />
                 :
                 <BroadcastMessageRow
@@ -412,6 +437,12 @@ const Messages = (props) => {
         props={props}
         isOpen={isNewBroadcastMesageModalVisible}
         closeCallback={(() => setIsNewBroadcastMesageModalVisible(false))}
+        successCallback={handleNewMessage} />
+
+      <NewMessageToPatientModal
+        props={props}
+        isOpen={isNewMesageToPatientModalVisible}
+        closeCallback={(() => setIsNewMesageToPatientModalVisible(false))}
         successCallback={handleNewMessage} />
 
       <NewInfoMessageModal

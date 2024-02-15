@@ -10,6 +10,7 @@ import { MessageAttachment } from './MessageAttachment';
 import MessageTypeBadge from '../../../components/Messages/MessageTypeBadge';
 import AnalysisCountBadge from './AnalysisCountBadge';
 import PatientMessageDropdownMenu from './PatientMessageDropdownMenu';
+import messageType from '../../../constants/messageType';
 
 
 const MessageListRow = ({
@@ -23,9 +24,12 @@ const MessageListRow = ({
     onNewVideoReplyClick,
     onOpenAnalysis,
     onMessageDeleteButtonClick,
-    patientMenuIsVisible }) => {
+    patientMenuIsVisible,
+    showVideoReplyButton }) => {
 
     return (
+
+       
         <Card className='mb-3'>
             <CardHeader className='bg-white'>
                 <div className="d-flex align-items-center">
@@ -39,6 +43,7 @@ const MessageListRow = ({
                         <h5 className="font-size-16 mt-0 mb-1">
                             {message.originalMessage.authorName}
                             <MessageTypeBadge props={props} type={message.originalMessage.messageType} />
+                           {message.originalMessage.messageType==messageType.MEDIC && <span> <i className="fa fa-arrow-circle-right" aria-hidden="true"></i> {message.originalMessage.recipients[0]}</span>  }
                             {showAnalysisCount &&
                                 message.originalMessage.hasAnalysis &&
                                 <a href='#'
@@ -59,7 +64,7 @@ const MessageListRow = ({
                     <div >
                         <MessageScopeIcon scope={message.originalMessage.messageScope} iconSizeClass="fa-2x" />
                     </div>
-                    {patientMenuIsVisible &&
+                    {patientMenuIsVisible && message.originalMessage.messageType!=messageType.MEDIC &&
                         <PatientMessageDropdownMenu
                             props={props}
                             onMessageDeleteButtonClick={onMessageDeleteButtonClick} />}
@@ -82,7 +87,8 @@ const MessageListRow = ({
                     showReplyButtons={showReplyButtons}
                     onTextMessageButtonClick={onNewTextReplyClick}
                     onAudioMessageButtonClick={onNewVoiceReplyClick}
-                    onVideoMessageButtonClick={onNewVideoReplyClick} />
+                    onVideoMessageButtonClick={onNewVideoReplyClick}
+                    showVideoReplyButton={showVideoReplyButton} />
             </CardBody>
 
             {

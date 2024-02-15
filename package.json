@@ -5,12 +5,15 @@
   "dependencies": {
     "@azure/msal-browser": "^2.29.0",
     "@azure/msal-react": "^1.4.8",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
     "@fullcalendar/bootstrap": "^5.10.1",
     "@fullcalendar/core": "^5.10.1",
     "@fullcalendar/daygrid": "^5.10.1",
     "@fullcalendar/interaction": "^5.10.1",
     "@fullcalendar/react": "^5.10.1",
     "@material-ui/core": "^4.12.3",
+    "@mui/material": "^5.15.4",
     "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.0.0",
     "@testing-library/user-event": "^13.5.0",
@@ -25,6 +28,7 @@
     "draft-js": "^0.11.7",
     "echarts": "^4.9.0",
     "echarts-for-react": "^2.0.16",
+    "exceljs": "^4.4.0",
     "feather-icons-react": "^0.4.3",
     "firebase": "^8.1.1",
     "formik": "^2.2.9",
@@ -70,6 +74,7 @@
     "react-meta-tags": "^1.0.1",
     "react-metismenu": "^1.4.0",
     "react-modal-video": "^1.2.8",
+    "react-onesignal": "^3.0.1",
     "react-owl-carousel": "^2.3.3",
     "react-perfect-scrollbar": "^1.5.8",
     "react-rangeslider": "^2.2.0",
@@ -97,7 +102,7 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set HTTPS=true&&set SSL_CRT_FILE=./ssl/server.crt&&set SSL_KEY_FILE=./ssl/server.key&&react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

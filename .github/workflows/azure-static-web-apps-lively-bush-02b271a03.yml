@@ -9,12 +9,12 @@ on:
     branches:
       - main
 env: 
-      REACT_APP_CLIENTID : ${{ secrets.REACT_APP_CLIENTID_DEV }} 
-      REACT_APP_SIGNINUSERFLOW : ${{ secrets.REACT_APP_SIGNINUSERFLOW_DEV }} 
-      REACT_APP_DOMAIN : ${{ secrets.REACT_APP_DOMAIN_DEV }} 
-      REACT_APP_LOGINENDPOINT : ${{ secrets.REACT_APP_LOGINENDPOINT_DEV }} 
-      REACT_APP_SCOPES : ${{ secrets.REACT_APP_SCOPES_DEV }} 
-      REACT_APP_APIENDPOINT : ${{ secrets.REACT_APP_APIENDPOINT_DEV }} 
+      REACT_APP_CLIENTID : ${{ secrets.REACT_APP_CLIENTID_PROD }} 
+      REACT_APP_SIGNINUSERFLOW : ${{ secrets.REACT_APP_SIGNINUSERFLOW_PROD }} 
+      REACT_APP_DOMAIN : ${{ secrets.REACT_APP_DOMAIN_PROD }} 
+      REACT_APP_LOGINENDPOINT : ${{ secrets.REACT_APP_LOGINENDPOINT_PROD }} 
+      REACT_APP_SCOPES : ${{ secrets.REACT_APP_SCOPES_PROD }} 
+      REACT_APP_APIENDPOINT : ${{ secrets.REACT_APP_APIENDPOINT_PROD }} 
       
 jobs:
   build_and_deploy_job:

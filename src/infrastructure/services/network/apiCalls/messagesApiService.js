@@ -5,6 +5,7 @@ import attachmentType from "../../../../constants/attachmentType";
 async function getMessages(projectId, medicalTeamId, pagingCount, onApiOkResultCallback, onApiKoResultCallback) {
     await axios.get(`Messages/${projectId}/${medicalTeamId}/${pagingCount}`)
         .then(response => {
+            console.log(response.data);
             onApiOkResultCallback(response.data);
         })
         .catch(error => {
@@ -114,6 +115,16 @@ async function createReplyWithVideoAttachment(request, attachment, onApiOkResult
     }), onApiKoResultCallback);
 }
 
+async function createMessagebyMedic(request, onApiOkResultCallback, onApiKoResultCallback) {
+    await axios.post(`Messages/${request.projectId}/${request.medicalTeamId}/${request.patientId}/createbyMedic`, request)
+        .then(response => {
+            onApiOkResultCallback(response.data);
+        })
+        .catch(error => {
+            onApiKoResultCallback(error);
+        });
+}
+
 async function deleteMessage(request, onApiOkResultCallback, onApiKoResultCallback) {
     await axios.delete(`Messages/${request.projectId}/${request.medicalTeamId}/${request.messageId}`)
         .then(response => {
@@ -123,6 +134,21 @@ async function deleteMessage(request, onApiOkResultCallback, onApiKoResultCallba
             onApiKoResultCallback(error);
         });
 }
+
+
+if(
+  (("standalone" in window.navigator) && !window.navigator.standalone)
+  ||
+  (!window.matchMedia('(display-mode: standalone)').matches)
+) {
+   // console.log(window.matchMedia('(display-mode: standalone)').matches)
+  //addToHomescreen({
+//detectHomescreen: true
+//});
+}
+
+
+
 
 export {
     getMessages,
@@ -135,5 +161,6 @@ export {
     createReplyWithImageAttachment,
     createReplyWithVoiceAttachment,
     createReplyWithVideoAttachment,
-    deleteMessage
+    deleteMessage,
+    createMessagebyMedic
 };
