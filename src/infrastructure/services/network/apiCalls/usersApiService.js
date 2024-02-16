@@ -6,6 +6,7 @@ async function getCurrentUserDetails( onApiOkResultCallback, onApiKoResultCallba
             onApiOkResultCallback(response.data);
         })
         .catch(error => {
+            console.log(error);
             onApiKoResultCallback(error);
         });
 }
