@@ -239,6 +239,18 @@ const NotCompiledNumericAnswer = ({ question, addCompiledQuestion }) => {
   function handleValueChange(value) {
 
     const enteredValue =value;
+    setValue(enteredValue);
+
+    if (enteredValue === '') {
+      setValue(enteredValue);
+      setErrorMessage(''); // Reset error message for empty input or '-' or '.'
+      return;
+    }
+  }
+
+  function handleValidation(value) {
+
+    const enteredValue =value;
     const pattern =new RegExp(`^-?\\d{0,${maxLength}}\\.?\\d{0,${decimalPlaces}}$`);
 
     if (enteredValue === '') {
@@ -250,31 +262,34 @@ const NotCompiledNumericAnswer = ({ question, addCompiledQuestion }) => {
     if (pattern.test(enteredValue)) {
 
         const number = parseFloat(enteredValue);
+        console.log(number);
         if (!isNaN(number)) {
           if (number >= min && number <= max) {
             setValue(enteredValue);
             var compiledQuestion = createCompiledQuestionByValue(question.id, value)
             addCompiledQuestion(compiledQuestion)
             setErrorMessage('');
-          } else if (enteredValue >= min.toString().slice(0, enteredValue.length) && number <= max) {
-            setValue(enteredValue); // Allow input if it matches the beginning of min
-            setErrorMessage('');
-          }
+          } 
           else
           {
             setErrorMessage('Input number is not in the range of valid values.');
           }
         }
     }
+    else
+    {
+      setErrorMessage('Input number is not in the range of valid values.');
+    }
 
 
-  }
+}
   return (
     <div>
     <Input
     type="text"
     value={value}
     onChange={e => handleValueChange(e.target.value)}
+    onBlur={e=> handleValidation(e.target.value)}
     placeholder={`Enter a number between ${min} and ${max} with ${decimalPlaces} decimal point(s).`}
   />
        {/* Display error message if it exists */}

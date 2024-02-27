@@ -174,7 +174,7 @@ const Messages = (props) => {
   };
 
   const handleVideoMessage = async (message) => {
-    await delay(40000);
+    await delay(30000);
     showSuccessToast(props.t("VideoMessageSentSuccessfullyAlert"));
 
   }
