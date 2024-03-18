@@ -223,9 +223,9 @@ const NotCompiledMoodAnswer = ({ question, addCompiledQuestion }) => {
   return <MoodSelector onMoodChange={handleValueChange} />
 }
 
-const NotCompiledNumericAnswer = ({ question, addCompiledQuestion }) => {
+const NotCompiledNumericAnswer = ({ props, question, addCompiledQuestion }) => {
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState(false);
 
   const min=question.properties.min;
   const max=question.properties.max;
@@ -243,46 +243,52 @@ const NotCompiledNumericAnswer = ({ question, addCompiledQuestion }) => {
 
     if (enteredValue === '') {
       setValue(enteredValue);
-      setErrorMessage(''); // Reset error message for empty input or '-' or '.'
+      setError(false); // Reset error message for empty input or '-' or '.'
       return;
     }
   }
 
-  function handleValidation(value) {
+    function handleValidation(value) {
 
-    const enteredValue =value;
-    const pattern =new RegExp(`^-?\\d{0,${maxLength}}\\.?\\d{0,${decimalPlaces}}$`);
-
-    if (enteredValue === '') {
-      setValue(enteredValue);
-      setErrorMessage(''); // Reset error message for empty input or '-' or '.'
-      return;
-    }
-
-    if (pattern.test(enteredValue)) {
-
-        const number = parseFloat(enteredValue);
-        console.log(number);
-        if (!isNaN(number)) {
-          if (number >= min && number <= max) {
-            setValue(enteredValue);
-            var compiledQuestion = createCompiledQuestionByValue(question.id, value)
-            addCompiledQuestion(compiledQuestion)
-            setErrorMessage('');
-          } 
-          else
-          {
-            setErrorMessage('Input number is not in the range of valid values.');
+      const enteredValue =value;
+      const pattern =new RegExp(`^-?\\d{0,${maxLength}}\\.?\\d{0,${decimalPlaces}}$`);
+  
+      if (enteredValue === '') {
+        setValue(enteredValue);
+        setError(false); // Reset error message for empty input or '-' or '.'
+        return;
+      }
+  
+      if (pattern.test(enteredValue)) {
+  
+          const number = parseFloat(enteredValue);
+          console.log(number);
+          if (!isNaN(number)) {
+            if (number >= min && number <= max) {
+              setValue(enteredValue);
+              var compiledQuestion = createCompiledQuestionByValue(question.id, value)
+              addCompiledQuestion(compiledQuestion)
+              setError(false);
+            } 
+            else
+            {
+              setError(true);
+            }
           }
-        }
-    }
-    else
-    {
-      setErrorMessage('Input number is not in the range of valid values.');
-    }
+      }
+      else
+      {
+        setError(true);
+      }
 
 
-}
+  }
+
+  var hint = props.t("NumericInputPlaceHolder");
+  hint = hint.replace("{min}", min);
+  hint = hint.replace("{max}", max);
+  hint = hint.replace("{decimalPlaces}", decimalPlaces);
+
   return (
     <div>
     <Input
@@ -290,10 +296,10 @@ const NotCompiledNumericAnswer = ({ question, addCompiledQuestion }) => {
     value={value}
     onChange={e => handleValueChange(e.target.value)}
     onBlur={e=> handleValidation(e.target.value)}
-    placeholder={`Enter a number between ${min} and ${max} with ${decimalPlaces} decimal point(s).`}
+    placeholder={hint}
   />
        {/* Display error message if it exists */}
-       {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+       {error && <p style={{ color: 'red' }}>{props.t("InvalidNumber")}</p>}
        </div>
   )
 }
