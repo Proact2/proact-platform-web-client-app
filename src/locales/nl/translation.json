@@ -66,6 +66,7 @@
   "BradcastMessageInfo":"Een Broadcast-bericht is zichtbaar voor alle patiënten en specialisten in uw medisch team.",
 
   "BradcastMessagePageTitle":"Broadcast-bericht",
+  "EditBradcastMessagePageTitle":"Bewerk Broadcast-bericht",
 
   "BroadcastType":"Broadcast",
 
@@ -174,7 +175,7 @@
   "MinutesSpan":"min",
 
   "NewBroadcastMessageButton":"Nieuw broadcast-bericht",
-
+  
   "NewMessageToPatientButton":"Nieuw bericht aan patiënt",
 
   "NewMessageButton":"Nieuw onderwerp",
@@ -477,7 +478,11 @@
     "BoolAnswer": "Waar of niet waar",
     "RatingAnswer": "Lineaire schaal",
     "MoodAnswer": "leuk vinden",
+    "NumericAnswer": "Numeriek antwoord",
+    "InvalidNumber":"Het invoernummer ligt niet binnen het bereik van geldige waarden.",
+    "NumericInputPlaceHolder":"Voer een getal in tussen {min} en {max} met {decimalPlaces} decimale punt(en).",
     "NoStatsForThisQuestionType": "Er worden geen statistieken verstrekt voor dit type vraag.",
+    "NotAnsweredQuestion": "Deze vraag werd niet beantwoord",
     "TRUE": "WAAR",
     "FALSE": "ONWAAR",
     "StartTime": "Start",
@@ -492,6 +497,7 @@
     "ExportAsExcel": "Excel exporteren",
     "DownloadSuccess": "Download compleet",
     "MessageDeleteSuccess": "Het bericht is verwijderd",
+    "MessageEditSuccess": "Het bericht is bewerkt",
     "RetakeVideo": "Neem een ​​nieuwe video op",
     "Patient": "Patiënt",
     "Medic": "Dokter",
@@ -508,6 +514,11 @@
     "Monthly": "Maandelijks",
     "Weekly": "Wekelijks",
     "Once": "Enkel",
+    "TwiceDaily":"Tweemaal daags",
+    "ThreeTimesDaily":"Driemaal daags",
+    "OnceEvery15Days":"Eenmaal per 15 dagen",
+    "OnceEvery21Days":"Eenmaal per 21 dagen",
+    "OnceEvery28Days":"Eenmaal per 28 dagen",
     "CompletedDateTime": "Voltooid op",
     "Change": "Wijziging",
     "Status": "Status",
