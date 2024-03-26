@@ -1,5 +1,5 @@
 {
-  "short_name": "React App",
+  "short_name": "Proact 2.0",
   "name": "Proact2",
  "icons": [
   {
@@ -37,7 +37,25 @@
    "sizes": "192x192",
    "type": "image\/png",
    "density": "4.0"
-  }
+  },
+  {
+    "src": "\/apple-icon-60x60.png",
+    "sizes": "60x60",
+    "type": "image\/png",
+    "density": "1.0"
+   },
+   {
+    "src": "\/apple-icon-72x72.png",
+    "sizes": "72x72",
+    "type": "image\/png",
+    "density": "1.5"
+   },
+   {
+    "src": "\/apple-icon-76x76.png",
+    "sizes": "76x76",
+    "type": "image\/png",
+    "density": "1.5"
+   }
  ],
   "start_url": ".",
   "display": "standalone",
