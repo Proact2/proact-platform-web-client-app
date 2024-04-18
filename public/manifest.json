@@ -1,11 +1,10 @@
 {
-  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+   "short_name": "Proact 2.0",
+  "name": "Proact2",
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#ffffff",
-  "short_name": "Proact 2.0",
-  "name": "Proact2",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
@@ -73,7 +72,7 @@
     "src": "\/apple-icon-120x120.png",
     "sizes": "120x120",
     "type": "image\/png",
-    "density": "2.0"
+    "density": "3.0"
    }
  ]
 
