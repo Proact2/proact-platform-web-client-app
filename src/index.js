@@ -8,6 +8,7 @@ import { Provider } from "react-redux"
 import { PublicClientApplication } from "@azure/msal-browser";
 import { msalConfig } from "./infrastructure/azure/azureB2cConfig";
 import store from "./store"
+import LocalServiceWorkerRegister from "./serviceWorkerRegistration"
 
 const msalInstance = new PublicClientApplication(msalConfig);
 
@@ -20,4 +21,6 @@ const app = (
 )
 
 ReactDOM.render(app, document.getElementById("root"))
-serviceWorker.unregister()
+//serviceWorker.unregister()
+
+LocalServiceWorkerRegister();
