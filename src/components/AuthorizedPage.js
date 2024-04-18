@@ -18,12 +18,11 @@ const AuthorizedPage = () => {
             var isAuth = userCanAccessToWebApp();
             setIsAuthorized(isAuth);
             if(!isInitialized){
-                OneSignal.init({ appId: '7e2f4f83-bc0d-4d67-b637-8c71040c2914',  notificationClickHandlerMatch: "URL"
-                }).then(() => {
-                    allowLocalhostAsSecureOrigin: true}).then(() => {
-                        OneSignal.login(userSession.userId);
-                        setIsInitialized(true);
-                  });
+                OneSignal.init({ appId: '7e2f4f83-bc0d-4d67-b637-8c71040c2914',  notificationClickHandlerMatch: "URL",
+                allowLocalhostAsSecureOrigin: true}).then(() => {
+                    OneSignal.login(userSession.userId);
+                    setIsInitialized(true);
+              });
             }
 
             function eventListener(event) {
