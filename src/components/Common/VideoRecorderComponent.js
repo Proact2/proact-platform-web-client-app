@@ -87,6 +87,7 @@ const VideoPlayerComponent = ({ props, isOpen, onFileGenerated }) => {
                     }}
                     muted
                     autoPlay
+                    playsInline 
                 />
                 <video
                     ref={recordWebcam.previewRef}
@@ -96,7 +97,7 @@ const VideoPlayerComponent = ({ props, isOpen, onFileGenerated }) => {
                         display: `${recordWebcam.status === "PREVIEW" ? "block" : "none"}`
                     }}
                     autoPlay
-                   /*  onMouseOver={() => replyVideo()} */
+                    playsInline 
                 />
             </div>
             <div className='text-center'>
@@ -145,7 +146,7 @@ const VideoPlayerComponent = ({ props, isOpen, onFileGenerated }) => {
                         <Button
                             color="primary"
                             onClick={replyVideo}
-                            className="btn-rounded px-5 me-4" >replay</Button>
+                            className="btn-rounded px-5 me-4" >{props.t("ReplayVideo")}</Button>
                         <Button
                             color="success"
                             onClick={saveFile}

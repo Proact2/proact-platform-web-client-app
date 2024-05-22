@@ -145,7 +145,7 @@ const TableContainer = ({
           </Col>
         )}
 
-        <Col md={1}>
+        <Col sm="2">
           <select
             className="form-select"
             value={pageSize}
@@ -264,7 +264,7 @@ const TableContainer = ({
             </Button>
           </div>
         </Col>
-        <Col className="col-md-auto d-none d-md-block">
+        <Col className="col-md-auto d-block">
           Page{" "}
           <strong>
             {pageIndex + 1} of {pageOptions.length}
