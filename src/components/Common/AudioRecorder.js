@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AudioAnalyser from "react-audio-analyser";
-import { useState } from "react";
-import { Button, Row } from "reactstrap";
+import { Button } from "reactstrap";
 import { useTimer } from "reactjs-countdown-hook";
-import { useEffect } from "react";
 
-const AudioRecorder = ({ props, onFileGenerated }) => {
+
+const AudioRecorder = ({ props, onFileGenerated, onRecordingStarted }) => {
 
     const [status, setStatus] = useState("inactive");
     const [audioSrc, setAudioSrc] = useState();
+    const [recorder, setRecorder] = useState(null);
 
     const audioType = "audio/wav";
     const maxDurationInSeconds = 60;
@@ -17,15 +17,25 @@ const AudioRecorder = ({ props, onFileGenerated }) => {
         audioType,
         status,
         audioSrc,
-        timeslice: 1000
+        timeslice: 1000,
+        startCallback: (e) => {
+            setRecorder(e.target)
+            onRecordingStarted(e.target)
+        }
     };
 
-    function startRecording() {
+
+    const startRecording = async () => {
         setStatus("recording")
         resume();
-    }
+    };
 
     function stopRecording() {
+       if(recorder)
+        {
+            recorder.stream.getAudioTracks().forEach((track) => track.stop());
+            setRecorder(null);
+        }
         setStatus("inactive");
         reset();
     }
@@ -61,6 +71,7 @@ const AudioRecorder = ({ props, onFileGenerated }) => {
             pause();
         }
     }, [pause, minutes, status]);
+
 
     return (
         <div className="text-center">
