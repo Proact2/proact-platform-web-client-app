@@ -105,7 +105,7 @@
 
  "EditTextMessagePageTitle":"Modifier un message",
 
- "EmptyComiledSurveysList":"Aucun questionnaire",
+ "EmptyComiledSurveysList":"Il n'y a aucun questionnaire à afficher",
 
  "EmptyList":"Aucun élément à afficher",
 
@@ -440,8 +440,8 @@
  "YourPatientsTitle":"Vos patients",
 
  "Show":"Montrer", 
- "AssignedPatientsCodes": "Patients study codes",
- "Period": "Period",
+ "AssignedPatientsCodes": "Codes d'étude des patients",
+ "Period": "Période",
 
 
 
@@ -478,7 +478,6 @@
  "InvalidNumber":"Le numéro saisi n’est pas dans la plage de valeurs valides.",
  "NumericInputPlaceHolder":"Saisissez un nombre compris entre {min} et {max} avec {decimalPlaces} point(s) décimal(s).",
  "NoStatsForThisQuestionType": "Aucune statistique n'est fournie pour ce type de question.",
- "NotAnsweredQuestion": "Cette question n'a pas reçu de réponse",
  "TRUE": "VRAI",
  "FALSE": "FAUX",
  "StartTime": "Début",
@@ -502,8 +501,8 @@
  "Reply": "Réponse",
  "Replies": "Réponses",
  "LoadMore": "Montre plus",
- "ProactTools": "OTHER TOOLS",
- "OpenAnalystConsole": "Ouvrir la console de l'analyste",
+ "ProactTools": "AUTRES OUTILS",
+ "OpenAnalystConsole": "Analyst console",
  "OpenControlPanel": "Control panel",
  "UnauthorizedMessage": "Vous n'êtes pas autorisé à accéder à PROACT 2.0",
  "CompileSurvey": "Remplir",
@@ -527,5 +526,18 @@
  "German": "Allemand",
  "Italian": "Italien",
  "Dutch": "Néerlandais",
- "Spanish": "Espagnol"
+ "Spanish": "Espagnol",
+ "NotAnsweredQuestion": "Cette question n'a pas reçu de réponse",
+ "FileUploadHintMessage": "Veuillez télécharger uniquement des images PNG ou JPEG.",
+ "Open": "ouvert",
+ "Closed": "fermé",
+ "EmptyContactPage":"Il n'y a pas de page de contact à afficher",
+ "NoAssignedMedicalTeam": "Nous n'avons trouvé aucune équipe médicale associée à votre compte. Contactez l'administrateur de l'équipe médicale",
+ "EmptyPatientList":"Il n'y a aucun patient à afficher",
+ "MessageToPatientPageTitle":"Envoyer un message à un patient",
+ "Home" : "Home",
+ "Page" : "Page",
+ "records" : "enregistrements",
+  "selectPlaceholder" : "Sélectionner...",
+ "NotificationSettingsUpdated" : "Le paramètre de notification a été mis à jour"
 }

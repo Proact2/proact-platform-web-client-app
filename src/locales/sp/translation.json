@@ -106,7 +106,7 @@
 
   "EditTextMessagePageTitle":"Modifica un mensaje",
 
-  "EmptyComiledSurveysList":"Ningún cuestionario",
+  "EmptyComiledSurveysList":"No hay cuestionarios para mostrar",
 
   "EmptyList":"No hay elementos para mostrar.",
 
@@ -441,13 +441,8 @@
   "YourPatientsTitle":"Tus pacientes",
 
   "Show":"Mostrar",
-  "AssignedPatientsCodes": "Patients study codes",
-  "Period": "Period",
-
-
-
-
-
+  "AssignedPatientsCodes": "Códigos de estudio de los pacientes",
+  "Period": "período",
 
   "UserCantSignin": "No está autorizado para acceder a PROACT 2.0",
   "UserCantReplyToMessage": "No tienes permiso para escribir o comentar mensajes.",
@@ -482,7 +477,6 @@
   "InvalidNumber":"El número de entrada no está en el rango de valores válidos.",
   "NumericInputPlaceHolder":"Introduzca un número entre {min} y {max} con {decimalPlaces} punto(s) decimal(es).",
   "NoStatsForThisQuestionType": "No hay estadísticas para este tipo de pregunta.",
-  "NotAnsweredQuestion": "Esta pregunta no fue respondida",
   "TRUE": "VERDADERO",
   "FALSE": "FALSO",
   "StartTime": "Comienza",
@@ -506,8 +500,8 @@
   "Reply": "Respuesta",
   "Replies": "Respuestas",
   "LoadMore": "Mostrar más",
-  "ProactTools": "OTHER TOOLS",
-  "OpenAnalystConsole": "Abrir la consola del analista",
+  "ProactTools": "OTRAS HERRAMIENTAS",
+  "OpenAnalystConsole": "Analyst console",
   "OpenControlPanel": "Control panel",
   "UnauthorizedMessage": "No está autorizado para acceder a PROACT 2.0",
   "CompileSurvey": "Completar",
@@ -531,6 +525,18 @@
   "German": "Alemán",
   "Italian": "Italiano",
   "Dutch": "Holandés",
-  "Spanish": "Español"
-  
+  "Spanish": "Español",
+  "NotAnsweredQuestion": "Esta pregunta no fue respondida",
+  "FileUploadHintMessage": "Cargue solo imágenes PNG o JPEG.",
+  "Open": "abierto",
+  "Closed": "cerrado",
+  "EmptyContactPage":"No hay ninguna página de contacto para mostrar",
+  "NoAssignedMedicalTeam": "No encontramos ningún equipo médico asociado a su cuenta. Póngase en contacto con el administrador del equipo médico",
+  "EmptyPatientList":"No hay pacientes para mostrar",
+  "MessageToPatientPageTitle":"Enviar mensaje a un paciente",
+  "Home" : "Home",
+  "Page" : "Página",
+  "records" : "archivos",
+  "selectPlaceholder" : "Seleccionar...",
+ "NotificationSettingsUpdated" : "Se ha actualizado la configuración de notificaciones"
 }

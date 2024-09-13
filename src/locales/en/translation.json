@@ -105,7 +105,7 @@
 
  "EditTextMessagePageTitle":"Edit message",
 
- "EmptyComiledSurveysList":"No questionnaire",
+ "EmptyComiledSurveysList":"There are no questionnaires to display",
 
  "EmptyList":"There are no elements to display",
 
@@ -403,7 +403,7 @@
 
  "UrgentMedicalAdviceCondition":"I understand that PROACT 2.0 IS NOT for emergency advice.",
 
- "UrgentMedicalAdviceError":"I confirm that I understand that PROACT 2.0 is not for emergency advice.",
+ "UrgentMedicalAdviceError":"Please confirm that I understand that PROACT 2.0 is not for emergency advice.",
 
  "UrgentMedicalAdviceMessage":"",
 
@@ -507,7 +507,7 @@
  "Replies": "Replies",
  "LoadMore": "Show more",
  "ProactTools": "OTHER TOOLS",
- "OpenAnalystConsole": "Open the analyst console",
+ "OpenAnalystConsole": "Analyst console",
  "OpenControlPanel": "Control panel",
  "UnauthorizedMessage": "You are not authorized to access PROACT 2.0",
  "CompileSurvey": "Fill in",
@@ -532,5 +532,16 @@
  "Italian": "Italian",
  "Dutch": "Dutch",
  "Spanish": "Spanish",
- "NotAnsweredQuestion": "This question was not answered"
+ "NotAnsweredQuestion": "This question was not answered",
+ "FileUploadHintMessage": "Please upload only PNG or JPEG images.",
+ "Open": "Open",
+ "Closed": "Closed",
+ "EmptyContactPage":"There is no contact page to display",
+ "NoAssignedMedicalTeam": "We did not find any medical team associated with your account. Contact Medical Team Admin",
+ "EmptyPatientList":"There are no patients to display",
+ "Home" : "Home",
+ "Page" : "Page",
+ "records" : "records",
+ "selectPlaceholder" : "Select...",
+ "NotificationSettingsUpdated" : "Notification setting has been updated"
 } 

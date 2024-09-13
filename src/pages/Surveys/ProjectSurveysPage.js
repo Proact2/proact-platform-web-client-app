@@ -8,7 +8,7 @@ import { Container, Row, Card, CardBody, Col } from 'reactstrap';
 import TableContainer from '../../components/Common/TableContainer';
 import { FromDateToDateCell } from "../../components/Common/TableCells"
 import { LoadingSpinner } from '../../components/Common/LoadingSpinner';
-import { getProjectSurveys } from '../../infrastructure/services/network/apiCalls/surveysApiService';
+import { getProjectSurveys , getProjectAssignedSurveys } from '../../infrastructure/services/network/apiCalls/surveysApiService';
 import { apiErrorToast } from '../../helpers/toastHelper';
 import { OnceSurveyActionButtons, SurveyActionButtons, SurveyTextWithReccurenceCell, SurveyPatientsCodes } from './Components/SurveysTableCells';
 import surveyReccurence from '../../constants/surveyReccurence';
@@ -37,7 +37,7 @@ const ProjectSurveysPage = (props) => {
     }, [projectProperties]);
 
     function loadSurveys() {
-        getProjectSurveys(environment.projectId, onRequestSuccess, apiErrorToast);
+        getProjectAssignedSurveys(environment.projectId, onRequestSuccess, apiErrorToast);
     }
 
     function onRequestSuccess(data) {
@@ -122,7 +122,7 @@ const ProjectSurveysPage = (props) => {
                 }
             }
         ],
-        []
+        [props.t]
     );
 
     return (
@@ -135,10 +135,11 @@ const ProjectSurveysPage = (props) => {
                 breadcrumbItem={props.t("StudySurveys")} />
             <Row>
                 <Col xs="12">
+              { environment ?
                     <Card>
                         <CardBody>
                             {surveys == null ?
-                                <LoadingSpinner />
+                                <LoadingSpinner />                             
                                 :
                                 <TableContainer
                                     columns={columns}
@@ -149,6 +150,15 @@ const ProjectSurveysPage = (props) => {
                             }
                         </CardBody>
                     </Card>
+                    :
+                    <Card>
+                        <CardBody>
+                        <div className="text-center text-muted m-5 p-5"> 
+                               {props.t("EmptyComiledSurveysList")}
+                               </div>
+                        </CardBody>
+                    </Card>
+}
                 </Col>
             </Row>
 

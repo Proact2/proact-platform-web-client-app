@@ -106,7 +106,7 @@
 
   "EditTextMessagePageTitle":"Een bericht wijzigen",
 
-  "EmptyComiledSurveysList":"Geen vragenlijst",
+  "EmptyComiledSurveysList":"Er zijn geen vragenlijsten om weer te geven",
 
   "EmptyList":"Er zijn geen items om weer te geven.",
 
@@ -441,8 +441,8 @@
   "YourPatientsTitle":"Uw patiënten",
 
     "Show":"Tonen",
-    "AssignedPatientsCodes": "Patients study codes",
-    "Period": "Period",
+    "AssignedPatientsCodes": "Patiëntenstudiecodes",
+    "Period": "periode",
 
 
 
@@ -482,7 +482,6 @@
     "InvalidNumber":"Het invoernummer ligt niet binnen het bereik van geldige waarden.",
     "NumericInputPlaceHolder":"Voer een getal in tussen {min} en {max} met {decimalPlaces} decimale punt(en).",
     "NoStatsForThisQuestionType": "Er worden geen statistieken verstrekt voor dit type vraag.",
-    "NotAnsweredQuestion": "Deze vraag werd niet beantwoord",
     "TRUE": "WAAR",
     "FALSE": "ONWAAR",
     "StartTime": "Start",
@@ -506,8 +505,8 @@
     "Reply": "Antwoord",
     "Replies": "Antwoorden",
     "LoadMore": "Laat meer zien",
-    "ProactTools": "OTHER TOOLS",
-    "OpenAnalystConsole": "Open de analistenconsole",
+    "ProactTools": "ANDERE HULPMIDDELEN",
+    "OpenAnalystConsole": "Analyst console",
     "OpenControlPanel": "Control panel",
     "UnauthorizedMessage": "U bent niet geautoriseerd voor toegang tot PROACT 2.0",
     "CompileSurvey": "Invullen",
@@ -531,6 +530,18 @@
     "German": "Duits",
     "Italian": "Italiaans",
     "Dutch": "Nederlands",
-    "Spanish": "Spaans"
-  
+    "Spanish": "Spaans",
+    "NotAnsweredQuestion": "Deze vraag werd niet beantwoord",
+    "FileUploadHintMessage": "Upload alleen PNG- of JPEG-afbeeldingen.",
+    "Open": "open",
+    "Closed": "gesloten",
+    "EmptyContactPage":"Er is geen contactpagina om weer te geven",
+    "NoAssignedMedicalTeam": "We hebben geen medisch team gevonden dat aan uw account is gekoppeld. Neem contact op met de beheerder van het medisch team",
+    "EmptyPatientList":"Er zijn geen patiënten om weer te geven",
+    "MessageToPatientPageTitle":"Stuur een bericht naar een patiënt",
+    "Home" : "Home",
+    "Page" : "Pagina",
+    "records" : "verslagen",
+  "selectPlaceholder" : "Selecteren...",
+ "NotificationSettingsUpdated" : "Meldingsinstelling is bijgewerkt"
 }
