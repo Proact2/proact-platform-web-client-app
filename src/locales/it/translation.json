@@ -752,7 +752,7 @@
  "NotAnsweredQuestion": "A questa domanda non è stata data risposta",
  "FileUploadHintMessage": "Carica solo immagini PNG o JPEG.",
  "Open": "ouvert",
- "Closed": "aperto",
+ "Closed": "chiuso",
  "EmptyContactPage":"Non c'è alcuna pagina di contatto da visualizzare",
  "NoAssignedMedicalTeam": "Non abbiamo trovato alcun team medico associato al tuo account. Contatta l'amministratore del team medico",
  "EmptyPatientList":"Non ci sono pazienti da visualizzare",
@@ -761,7 +761,8 @@
  "Page" : "Pagina",
  "records" : "registrazioni",
   "selectPlaceholder" : "Seleziona...",
- "NotificationSettingsUpdated" : "L'impostazione di notifica è stata aggiornata"
+ "NotificationSettingsUpdated" : "L'impostazione di notifica è stata aggiornata",
+ "InstituteConfigErrorMessage":"C'è un problema di configurazione con questo studio"
 }
 
 
