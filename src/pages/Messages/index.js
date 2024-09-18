@@ -44,7 +44,9 @@ import medicalTeamStatus from "../../constants/medicalTeamStatus"
 import axios from "axios"
 import { AcceptPrivacyModal } from "../../components/Common/AcceptPrivacyModal"
 import { EmergencyAlertModal } from "../../components/Common/EmergencyAlertModal"
-import { getSessionUserAgreement } from "../../infrastructure/session/useUserSession"
+//import  {LoadUserAgreement} from "../../infrastructure/session/useUserAgreement";
+import useUserAgreement from "../../infrastructure/session/useUserAgreement"
+
 
 const Messages = props => {
   const [initialising, setInitialization] = useState(true)
@@ -102,31 +104,36 @@ const Messages = props => {
   const userSession = useUserSession()
 
   const environment = useEnvironment()
+
+  const { userAgreement,LoadUserAgreement } = useUserAgreement();
+
+  //const userAgreement = useUserAgreement()
+
   const cancelToken = useRef(null)
 
   const POOL_REQUEST_INTERVAL_IN_SECONDS = 60000
 
-  useEffect(() => {
-    if (userSession && userSession.isPatient && !initialLoadCompleted) {
-      loadUserAgreement()
+  useEffect( async () => {
+    if (userSession  && !initialLoadCompleted) {
+       await GetUserAgreement()
+       
       setAgreementLoadCompleted(true);
     }
   }, [userSession])
 
   useEffect(() => {
-    if (environment && !initialLoadCompleted) {
+    if (environment && agreementLoadCompleted && !initialLoadCompleted) {
       getCurrentProjectProperties()
       // loadMessages()
       if (userSession && userSession.isMedicalProfessional)
       {
-        console.log("loadPatients")
         loadPatients()
       }
       setInitialLoadCompleted(true) // Mark initial load as completed
     }
     // else
     //     setInitialization(false)
-  }, [environment])
+  }, [environment,agreementLoadCompleted])
 
   useEffect(() => {
     if (initialLoadCompleted) {
@@ -150,14 +157,10 @@ const Messages = props => {
     return initPoolRequest()
   }, [messages])
 
-  function loadUserAgreement() {
-    if (
-      userSession &&
-      userSession.isPatient &&
-      userSession.state === userSubscriptionState.Active
-    ) {
-      const userAgreement = getSessionUserAgreement()
-      console.log(userAgreement)
+  async  function GetUserAgreement() {
+    if(userSession.isPatient &&  userSession.state == userSubscriptionState.Active)
+    {
+       var userAgreement= await LoadUserAgreement(userSession.userId)
       if (userAgreement) {
         if (!userAgreement.privacyAccepted) {
           setIsPrivacyModalVisible(true)
@@ -175,7 +178,10 @@ const Messages = props => {
         setIsConditionsModalVisible(true)
         setIsEmergencyAlertModalVisible(true)
       }
+
     }
+
+    
   }
 
   function loadPatients() {
@@ -539,7 +545,7 @@ const Messages = props => {
 
   const handleCloseEmergencyModal = () => {
     setIsEmergencyAlertModalVisible(false)
-    loadUserAgreement()
+    GetUserAgreement()
   }
 
   const handleContinuePrivacyModal = () => {
