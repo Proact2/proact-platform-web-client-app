@@ -13,6 +13,18 @@ function millisToMinutesAndSeconds(millis) {
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
+function getThumbnailWidth(width) {
+    const thumbnailWidth = width ? width : 720;
+   // return thumbnailWidth;
+    return Math.min(thumbnailWidth / 2, window.innerWidth * 0.9);  // Limit to 90% of the screen width
+}
+
+function getThumbnailHeight(height) {
+    const thumbnailHeight = height ? height : 1280;
+   // return thumbnailHeight;
+    return Math.min(thumbnailHeight / 2, window.innerHeight * 0.5);  // Limit to 50% of the screen height
+}
+
 const MessageAttachment = ({ props, attachment, messageId, onClickCallback }) => {
     if (attachment != null) {
         if (attachment.attachmentType == 0) {
@@ -59,9 +71,9 @@ const MessageImageAttachment = ({ props, attachment }) => {
                         setLightboxVisible(true)
                     }}
 
-                    width="100%"
-                    height="350px"
-                    style={{ objectFit: "cover" }}
+                     width="100%"
+                    height="350px" 
+                    style={{ objectFit: "contain" }}
                     src={attachment.url}
                 />
             </Link>
@@ -74,6 +86,9 @@ const MessageVideoAttachment = ({ props, attachment, messageId, onClickCallback 
 
     const duration
         = millisToMinutesAndSeconds(attachment.durationInMilliseconds);
+
+    const width=getThumbnailWidth(attachment.width);
+    const height=getThumbnailHeight(attachment.height);
 
     function onClickHandler() {
         if (onClickCallback != null) {
@@ -90,7 +105,7 @@ const MessageVideoAttachment = ({ props, attachment, messageId, onClickCallback 
 
     const badgeDurationStyle = {
         top: "1%",
-        left: "90%",
+        left: "85%",
         position: "absolute",
         transform: "translate(-50%, 50%)"
     }
@@ -98,14 +113,14 @@ const MessageVideoAttachment = ({ props, attachment, messageId, onClickCallback 
     return (
         <Link to="#" onClick={onClickHandler} >
 
-            <div style={{ position: "relative" }}>
+            <div style={{ position: "relative" , maxWidth:"fit-content" , margin:"0 auto" }}>
                 <i className="fas fa-play-circle fa-5x text-white" style={iconStyle}></i>
-                <h3 style={badgeDurationStyle}><Badge className='bg-dark' pill="true" >{duration}</Badge></h3>
+                <h3 style={badgeDurationStyle}><Badge className='bg-dark' pill >{duration}</Badge></h3>
                 <img
-                    width="100%"
-                    height="350px"
-                    style={{ objectFit: "cover" }}
+                    style={{ objectFit: "contain" }}
                     src={attachment.thumbnailUrl}
+                    width= {width}
+                    height="auto"
                 />
             </div>
 

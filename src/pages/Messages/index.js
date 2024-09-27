@@ -47,6 +47,15 @@ import { EmergencyAlertModal } from "../../components/Common/EmergencyAlertModal
 //import  {LoadUserAgreement} from "../../infrastructure/session/useUserAgreement";
 import useUserAgreement from "../../infrastructure/session/useUserAgreement"
 
+// const Messages = props => {
+//   const usersession=useUserSession();
+//   return(
+// <div>
+//   <h1>Messages</h1>
+// </div>
+
+//   )
+// }
 
 const Messages = props => {
   const [initialising, setInitialization] = useState(true)
@@ -335,7 +344,7 @@ const Messages = props => {
   }
 
   const handleVideoMessage = async message => {
-    await delay(30000)
+    //await delay(10000)
     showSuccessToast(props.t("VideoMessageSentSuccessfullyAlert"))
   }
 
