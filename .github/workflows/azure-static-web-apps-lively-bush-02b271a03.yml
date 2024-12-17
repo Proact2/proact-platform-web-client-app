@@ -17,19 +17,19 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
 
-  strategy:
-    matrix:
-      environment: [production, staging]  # Available environments
-        include:
-          - environment: production
-            branch: main
-          - environment: staging
-            branch: dev
+    strategy:
+      matrix:
+        environment: [production, staging]  # Available environments
+      include:
+        - environment: production
+          branch: main
+        - environment: staging
+          branch: dev
 
-  if: github.ref == 'refs/heads/${{ matrix.branch }}'  # Only run this job for the relevant branch
+    if: github.ref == 'refs/heads/${{ matrix.branch }}'  # Only run this job for the relevant branch
 
 
-  env: 
+    env: 
     #  REACT_APP_CLIENTID : ${{ vars.REACT_APP_CLIENTID }}    
     #  REACT_APP_SIGNINUSERFLOW : ${{ vars.REACT_APP_SIGNINUSERFLOW }}
     #  REACT_APP_DOMAIN : ${{ vars.REACT_APP_DOMAIN }}
@@ -37,12 +37,12 @@ jobs:
     #  REACT_APP_SCOPES : ${{ vars.REACT_APP_SCOPES }}
     #  REACT_APP_APIENDPOINT : ${{ vars.REACT_APP_APIENDPOINT }}
 
-    REACT_APP_CLIENTID : ${{ vars["REACT_APP_CLIENTID_${{ matrix.environment | upper }}"] }}
-    REACT_APP_SIGNINUSERFLOW : ${{ vars["REACT_APP_SIGNINUSERFLOW_${{ matrix.environment | upper }}"] }}
-    REACT_APP_DOMAIN : ${{ vars["REACT_APP_DOMAIN_${{ matrix.environment | upper }}"] }}
-    REACT_APP_LOGINENDPOINT : ${{ vars["REACT_APP_LOGINENDPOINT_${{ matrix.environment | upper }}"] }}
-    REACT_APP_SCOPES : ${{ vars["REACT_APP_SCOPES_${{ matrix.environment | upper }}"] }}
-    REACT_APP_APIENDPOINT : ${{ vars["REACT_APP_APIENDPOINT_${{ matrix.environment | upper }}"] }}
+      REACT_APP_CLIENTID : ${{ vars["REACT_APP_CLIENTID_${{ matrix.environment | upper }}"] }}
+      REACT_APP_SIGNINUSERFLOW : ${{ vars["REACT_APP_SIGNINUSERFLOW_${{ matrix.environment | upper }}"] }}
+      REACT_APP_DOMAIN : ${{ vars["REACT_APP_DOMAIN_${{ matrix.environment | upper }}"] }}
+      REACT_APP_LOGINENDPOINT : ${{ vars["REACT_APP_LOGINENDPOINT_${{ matrix.environment | upper }}"] }}
+      REACT_APP_SCOPES : ${{ vars["REACT_APP_SCOPES_${{ matrix.environment | upper }}"] }}
+      REACT_APP_APIENDPOINT : ${{ vars["REACT_APP_APIENDPOINT_${{ matrix.environment | upper }}"] }}
       
     steps:
       - uses: actions/checkout@v3
