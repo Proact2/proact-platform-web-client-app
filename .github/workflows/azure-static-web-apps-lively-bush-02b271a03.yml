@@ -10,7 +10,7 @@ on:
     branches:
       - main
       - dev
-      
+
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
@@ -26,23 +26,13 @@ jobs:
         - environment: staging
           branch: dev
 
-    #if: github.ref == 'refs/heads/${{ matrix.branch }}'  # Only run this job for the relevant branch
-
-
     env: 
-    #  REACT_APP_CLIENTID : ${{ vars.REACT_APP_CLIENTID }}    
-    #  REACT_APP_SIGNINUSERFLOW : ${{ vars.REACT_APP_SIGNINUSERFLOW }}
-    #  REACT_APP_DOMAIN : ${{ vars.REACT_APP_DOMAIN }}
-    #  REACT_APP_LOGINENDPOINT : ${{ vars.REACT_APP_LOGINENDPOINT }}
-    #  REACT_APP_SCOPES : ${{ vars.REACT_APP_SCOPES }}
-    #  REACT_APP_APIENDPOINT : ${{ vars.REACT_APP_APIENDPOINT }}
-
-      REACT_APP_CLIENTID : ${{ vars["REACT_APP_CLIENTID_${{ matrix.environment | upper }}"] }}
-      REACT_APP_SIGNINUSERFLOW : ${{ vars["REACT_APP_SIGNINUSERFLOW_${{ matrix.environment | upper }}"] }}
-      REACT_APP_DOMAIN : ${{ vars["REACT_APP_DOMAIN_${{ matrix.environment | upper }}"] }}
-      REACT_APP_LOGINENDPOINT : ${{ vars["REACT_APP_LOGINENDPOINT_${{ matrix.environment | upper }}"] }}
-      REACT_APP_SCOPES : ${{ vars["REACT_APP_SCOPES_${{ matrix.environment | upper }}"] }}
-      REACT_APP_APIENDPOINT : ${{ vars["REACT_APP_APIENDPOINT_${{ matrix.environment | upper }}"] }}
+      REACT_APP_CLIENTID: ${{ vars["REACT_APP_CLIENTID_${{ matrix.environment | upper }}"] }}
+      REACT_APP_SIGNINUSERFLOW: ${{ vars["REACT_APP_SIGNINUSERFLOW_${{ matrix.environment | upper }}"] }}
+      REACT_APP_DOMAIN: ${{ vars["REACT_APP_DOMAIN_${{ matrix.environment | upper }}"] }}
+      REACT_APP_LOGINENDPOINT: ${{ vars["REACT_APP_LOGINENDPOINT_${{ matrix.environment | upper }}"] }}
+      REACT_APP_SCOPES: ${{ vars["REACT_APP_SCOPES_${{ matrix.environment | upper }}"] }}
+      REACT_APP_APIENDPOINT: ${{ vars["REACT_APP_APIENDPOINT_${{ matrix.environment | upper }}"] }}
       
     steps:
       - uses: actions/checkout@v3
@@ -57,12 +47,9 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_LIVELY_BUSH_02B271A03 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "build" # Built app content directory - optional
-          ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
