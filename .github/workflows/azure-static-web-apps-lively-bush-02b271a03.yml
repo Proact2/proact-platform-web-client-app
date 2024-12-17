@@ -26,7 +26,7 @@ jobs:
         - environment: staging
           branch: dev
 
-    if: github.ref == 'refs/heads/${{ matrix.branch }}'  # Only run this job for the relevant branch
+    #if: github.ref == 'refs/heads/${{ matrix.branch }}'  # Only run this job for the relevant branch
 
 
     env: 
