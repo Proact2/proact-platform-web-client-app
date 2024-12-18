@@ -11,34 +11,47 @@ on:
       - main
       - dev
 
+      
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
 
-    strategy:
-      matrix:
-        environment: [production, staging]  # Available environments
-      include:
-        - environment: production
-          branch: main
-        - environment: staging
-          branch: dev
-
     env: 
-      REACT_APP_CLIENTID: ${{ vars["REACT_APP_CLIENTID_${{ matrix.environment | upper }}"] }}
-      REACT_APP_SIGNINUSERFLOW: ${{ vars["REACT_APP_SIGNINUSERFLOW_${{ matrix.environment | upper }}"] }}
-      REACT_APP_DOMAIN: ${{ vars["REACT_APP_DOMAIN_${{ matrix.environment | upper }}"] }}
-      REACT_APP_LOGINENDPOINT: ${{ vars["REACT_APP_LOGINENDPOINT_${{ matrix.environment | upper }}"] }}
-      REACT_APP_SCOPES: ${{ vars["REACT_APP_SCOPES_${{ matrix.environment | upper }}"] }}
-      REACT_APP_APIENDPOINT: ${{ vars["REACT_APP_APIENDPOINT_${{ matrix.environment | upper }}"] }}
-      
+      REACT_APP_CLIENTID : ${{ vars.REACT_APP_CLIENTID }}
+      REACT_APP_SIGNINUSERFLOW : ${{ vars.REACT_APP_SIGNINUSERFLOW }}
+      REACT_APP_DOMAIN : ${{ vars.REACT_APP_DOMAIN }}
+      REACT_APP_LOGINENDPOINT : ${{ vars.REACT_APP_LOGINENDPOINT }}
+      REACT_APP_SCOPES : ${{ vars.REACT_APP_SCOPES }}
+      REACT_APP_APIENDPOINT : ${{ vars.REACT_APP_APIENDPOINT }}
+
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: true
           lfs: false
+
+      - name: Set environment-specific variables
+        run: |
+          if [ "${{ github.ref }}" == "refs/heads/main" ]; then
+            echo "Setting environment for production"
+            echo "REACT_APP_CLIENTID=${{ vars.REACT_APP_CLIENTID_PRODUCTION }}" >> $GITHUB_ENV
+            echo "REACT_APP_SIGNINUSERFLOW=${{ vars.REACT_APP_SIGNINUSERFLOW_PRODUCTION }}" >> $GITHUB_ENV
+            echo "REACT_APP_DOMAIN=${{ vars.REACT_APP_DOMAIN_PRODUCTION }}" >> $GITHUB_ENV
+            echo "REACT_APP_LOGINENDPOINT=${{ vars.REACT_APP_LOGINENDPOINT_PRODUCTION }}" >> $GITHUB_ENV
+            echo "REACT_APP_SCOPES=${{ vars.REACT_APP_SCOPES_PRODUCTION }}" >> $GITHUB_ENV
+            echo "REACT_APP_APIENDPOINT=${{ vars.REACT_APP_APIENDPOINT_PRODUCTION }}" >> $GITHUB_ENV
+          elif [ "${{ github.ref }}" == "refs/heads/dev" ]; then
+            echo "Setting environment for development"
+            echo "REACT_APP_CLIENTID=${{ vars.REACT_APP_CLIENTID_STAGING }}" >> $GITHUB_ENV
+            echo "REACT_APP_SIGNINUSERFLOW=${{ vars.REACT_APP_SIGNINUSERFLOW_STAGING }}" >> $GITHUB_ENV
+            echo "REACT_APP_DOMAIN=${{ vars.REACT_APP_DOMAIN_STAGING }}" >> $GITHUB_ENV
+            echo "REACT_APP_LOGINENDPOINT=${{ vars.REACT_APP_LOGINENDPOINT_STAGING }}" >> $GITHUB_ENV
+            echo "REACT_APP_SCOPES=${{ vars.REACT_APP_SCOPES_STAGING }}" >> $GITHUB_ENV
+            echo "REACT_APP_APIENDPOINT=${{ vars.REACT_APP_APIENDPOINT_STAGING }}" >> $GITHUB_ENV
+          fi
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -47,9 +60,12 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_LIVELY_BUSH_02B271A03 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
           action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
           app_location: "/" # App source code path
           api_location: "" # Api source code path - optional
           output_location: "build" # Built app content directory - optional
+          ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
