@@ -2,30 +2,31 @@ import React from "react"
 import { ReactSession } from "react-client-session"
 import { apiErrorToast } from "../../helpers/toastHelper"
 import UserRoles from "./UserRoles"
-import { aquireAccessToken } from "../azure/aquireAccessToken"
 import getCurrentUserDetails from "../services/network/apiCalls/usersApiService"
 import { useState, useEffect } from "react"
+import {msalInstance} from "../../index";
 
-
-
-  const userProfileKey = "userProfile"
+const userProfileKey = "userProfile"
 const useUserSession = () => {
-  console.log("useUserSession: start")
+ // console.log("useUserSession: start")
   const [userSession, setUserSession] = useState(null)
 
+ // aquireAccessToken(loadCurrentUserData);
 
-  // useEffect(() => {
-  //   console.log("useUserSession: useEffect")
-    aquireAccessToken(loadCurrentUserData)
-  // }, [])
+  useEffect(() => {
+    if (!userSession) {
+      const accounts = msalInstance.getAllAccounts();
+      loadCurrentUserData(accounts[0]);
+    }
+}, [userSession]);
 
-  
+
 
   function loadCurrentUserData(account) {
     const userProfileStr = ReactSession.get(userProfileKey)
     if (userProfileStr) {
       var user = getSessionUserProfile()
-      if (user.accountId == account.localAccountId) {
+      if (account!= null && user.accountId == account.localAccountId) {
         /*  if (user.isPatient)
         {
           LoadUserAgreement(user.userId)
@@ -58,11 +59,11 @@ const useUserSession = () => {
   function saveUserProfile(userData) {
     var userDataWithRolers = defineRoles(userData)
 
-   /*  if (userDataWithRolers.isPatient)
+    /*  if (userDataWithRolers.isPatient)
     {
       getUserAgreement()
       userDataWithRolers.setAgreement=true;
-    } */ 
+    } */
 
     var userProfileStr = JSON.stringify(userDataWithRolers)
     ReactSession.set(userProfileKey, userProfileStr)
@@ -92,7 +93,7 @@ const useUserSession = () => {
     return userData
   }
 
- /*  function setUserAgreement(agreement) {
+  /*  function setUserAgreement(agreement) {
     if (agreement) {
       var userAgreementStr = JSON.stringify(agreement)
       ReactSession.set("userAgreement", userAgreementStr)
@@ -110,4 +111,3 @@ const useUserSession = () => {
 }
 
 export default useUserSession
-

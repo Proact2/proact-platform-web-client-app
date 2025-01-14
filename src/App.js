@@ -30,7 +30,7 @@ import "./assets/scss/theme.scss";
 
 // OneSignal
 import OneSignal from 'react-onesignal';
-import { useEffect } from 'react';
+import { useEffect ,useState } from 'react';
 
 setupApiConfiguration(languages.en.tag);
 ReactSession.setStoreType("localStorage");
@@ -38,12 +38,17 @@ ReactSession.setStoreType("localStorage");
 
 const App = ({ instance }) => {
 
-  //  useEffect(() => {
-  //   OneSignal.init({ appId: 'ebb1244f-a56b-4c7e-a7b0-8e947b008075'}).then(() => {
-  //      OneSignal.Slidedown.promptPush();
-  //      }), []});
+ // const [isInitialized, setIsInitialized] = useState(false);
 
-  console.log(process.env.REACT_APP_SCOPES);
+/*      useEffect(() => {
+      if(!isInitialized){
+      OneSignal.init({ appId: 'ebb1244f-a56b-4c7e-a7b0-8e947b008075',  notificationClickHandlerMatch: "URL",
+                allowLocalhostAsSecureOrigin: true}).then(() => {
+        OneSignal.Slidedown.promptPush();
+        setIsInitialized(true);
+        })
+      }
+    }, []);  */
 
   function getLayout() {
     let layoutCls = HorizontalLayout;
