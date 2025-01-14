@@ -1,7 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import App from "./App"
-import * as serviceWorker from "./serviceWorker"
+
 import { BrowserRouter } from "react-router-dom"
 import { Provider } from "react-redux"
 
@@ -23,4 +23,26 @@ const app = (
 ReactDOM.render(app, document.getElementById("root"))
 //serviceWorker.unregister()
 
+//serviceWorker.register()
 LocalServiceWorkerRegister();
+
+
+/* if ("serviceWorker" in navigator) {
+  window.addEventListener('load',() => {
+    navigator.serviceWorker.register('/serviceWorker.js');
+  });
+} */
+
+
+/* if ('serviceWorker' in navigator) {
+     window.addEventListener('load', () => {
+       navigator.serviceWorker.register('/serviceWorker.js')
+      .then(registration => {
+       console.log('SW registered: ', registration);
+       }).catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+       });
+     });
+   } */
+
+     export {msalInstance} ;
