@@ -35,10 +35,14 @@ const VideoPlayerComponent = ({ props, isOpen, onFileGenerated }) => {
         console.log(`${dimensions.width}x${dimensions.height}`); 
 
         const blob = await recordWebcam.getRecording();
+        console.log("blob", blob)
         var file = new File([blob], "patientVideo.mp4", { type: OPTIONS.mimeType });
         Object.assign(file, {
             preview: URL.createObjectURL(file)
         });
+
+        console.log("saveFile/File", file)
+
         onFileGenerated(file,dimensions.width, dimensions.height, dimensions.duration);
     };
 

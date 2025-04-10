@@ -75,8 +75,10 @@ export const NewVideoMessageModal = ({ props, isOpen, originalMessageId, closeCa
     }
 
     async function handleFileVideo(file,width,height, duration) {
+        console.log("handleFileVideo", file);
+
         const thumbnail = await getVideoThumbnails(file);
-        //console.log(thumbnail);
+        console.log(thumbnail);
         sendMessage(file,width,height,duration, thumbnail)
     }
 
