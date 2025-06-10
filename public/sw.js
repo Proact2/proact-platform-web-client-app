@@ -68,6 +68,12 @@ self.addEventListener('install', e => {
   
             // Always try the network first.
             const networkResponse = await fetch(event.request);
+
+                      
+            if (!networkResponse || !networkResponse.ok ) {
+              throw new Error(`Bad HTTP status. Status: ${networkResponse.status}`);
+            }
+
             return networkResponse;
           } catch (error) {
             // catch is only triggered if an exception is thrown, which is
@@ -75,10 +81,11 @@ self.addEventListener('install', e => {
             // If fetch() returns a valid HTTP response with a response code in
             // the 4xx or 5xx range, the catch() will NOT be called.
             console.log("Fetch failed; returning offline page instead.", error);
-  
-            const cache = await caches.open(CACHE_NAME);
-            const cachedResponse = await cache.match(OFFLINE_URL);
-            return cachedResponse;
+            
+            throw new Error(`Error: ${error.message}`);
+            // const cache = await caches.open(CACHE_NAME);
+            // const cachedResponse = await cache.match(OFFLINE_URL);
+            // return cachedResponse;
           }
         })()
       );
