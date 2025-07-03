@@ -5,11 +5,11 @@ const devCPanelUrl = "https://devetproactcpanel.azurewebsites.net/";
 const prodCPanelUrl = "https://proact2-controlpanel.eu/";
 
 const getControlPanelBaseUrl = () => {
-    return `${devCPanelUrl}`;
+    return `${prodCPanelUrl}`;
 }
 
 const getAnalystConsoleBaseUrl = () => {
-    return `${devAnalystConsoleBaseUrl}`;
+    return `${prodAnalystConsoleBaseUrl}`;
 }
 
 const generateAnalysisPageUrl = (projectId, userId, messageId) => {
