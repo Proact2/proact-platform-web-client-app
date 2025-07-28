@@ -33,7 +33,7 @@ import { getProjectDetails } from "../../infrastructure/services/network/apiCall
 import { generateAnalysisPageUrl } from "../../helpers/externalUrlHelper"
 import SweetAlert from "react-bootstrap-sweetalert"
 import AuthorizedPage from "../../components/AuthorizedPage"
-import { Redirect } from "react-router-dom"
+import { Redirect   } from "react-router-dom"
 import { NewMessageToPatientModal } from "./Modals/NewMessageToPatientModal"
 import { EditBroadcastMessageModal } from "./Modals/EditBroadcastMessageModal"
 import PatientFilter from "../../components/Common/PatientListAutoCompelete"
@@ -116,8 +116,6 @@ const Messages = props => {
   const environment = useEnvironment()
 
   const { userAgreement, LoadUserAgreement } = useUserAgreement()
-
-  //const userAgreement = useUserAgreement()
 
   const cancelToken = useRef(null)
 
@@ -581,6 +579,19 @@ const Messages = props => {
       <AuthorizedPage />
       {checkIfMedicalTeamIsOpen()}
       {checkIfMessagingIsEnabled()}
+
+{/* <Row>
+  <Col>
+  
+  <Button
+                    color="primary"
+                    onClick={handleRedirect}
+                  >
+                   open camera test
+                  </Button>
+        
+  </Col>
+</Row> */}
 
       <Row>
         <Col className="d-flex justify-content-start">

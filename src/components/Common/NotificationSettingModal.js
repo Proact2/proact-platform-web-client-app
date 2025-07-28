@@ -72,9 +72,6 @@ const NotificationSettingModal = ({ props, isOpen, closeCallback }) => {
   }
 
   function validate() {
-    console.log(fromTime)
-    console.log(endTime)
-    console.log(notificationEnabled)
     var isValid = true
     setIsErrorVisible(false)
 
@@ -112,7 +109,7 @@ const NotificationSettingModal = ({ props, isOpen, closeCallback }) => {
   function handleChangeButtonClick() {
     if (validate()) {
       const request = prepareRequestBody()
-      console.log(request)
+      //console.log(request)
       setNotificationSetting(request, apiSuccessHandler, apiErrorToast)
 
       //  reloadMainPage();
