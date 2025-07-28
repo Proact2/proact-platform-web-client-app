@@ -16,6 +16,7 @@ const generateAnalysisPageUrl = (projectId, userId, messageId) => {
     return `${getAnalystConsoleBaseUrl()}/${projectId}/messages/userId/${userId}/messageId/${messageId}`;
 }
 
+
 export  {
     getControlPanelBaseUrl,
     generateAnalysisPageUrl, 
