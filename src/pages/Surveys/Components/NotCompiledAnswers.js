@@ -11,8 +11,13 @@ import {
 import TextareaWithMaxlength from "../../../components/Common/TextareaWithMaxlength"
 import MoodSelector from "../../Messages/Components/MoodSelector"
 import NumericSlider from "../../../components/Common/NumericSlider"
+import CustomSurveyType from "../../../constants/CustomSurveyType"
+import DatePicker from "react-datepicker";
 
-function createCompiledQuestionByIds(questionId, ids) {
+import "react-datepicker/dist/react-datepicker.css";
+import { isRegExp } from "lodash"
+
+function createCompiledQuestionByIds(questionId, ids, isRequired) {
   var answers = []
   ids.forEach(element => {
     answers.push({
@@ -23,12 +28,13 @@ function createCompiledQuestionByIds(questionId, ids) {
   var question = {
     questionId: questionId,
     answers: answers,
+    isRequired: isRequired
   }
 
   return question
 }
 
-function createCompiledQuestionByValue(questionId, value) {
+function createCompiledQuestionByValue(questionId, value, isRequired) {
   var answers = []
   answers.push({
     value: value + "",
@@ -37,6 +43,7 @@ function createCompiledQuestionByValue(questionId, value) {
   var question = {
     questionId: questionId,
     answers: answers,
+    isRequired: isRequired
   }
 
   return question
@@ -44,7 +51,7 @@ function createCompiledQuestionByValue(questionId, value) {
 
 const NotCompiledOpenAnswer = ({ question, addCompiledQuestion }) => {
   function handleValueChange(value) {
-    var compiledQuestion = createCompiledQuestionByValue(question.id, value)
+    var compiledQuestion = createCompiledQuestionByValue(question.id, value, question.isRequired)
     addCompiledQuestion(compiledQuestion)
   }
   return (
@@ -56,18 +63,56 @@ const NotCompiledOpenAnswer = ({ question, addCompiledQuestion }) => {
   )
 }
 
+const NotCompiledDateAnswer = ({ question, addCompiledQuestion,
+  surveyLayout }) => {
+
+  const [startDate, setStartDate] = useState(null);
+
+  var placeholderText="dd/MM/yyyy";
+  if (surveyLayout == CustomSurveyType.EORTCQLQ_C30 || surveyLayout == CustomSurveyType.EORTC_QLQ_BR23) {
+    placeholderText="g, m, a"
+  }
+
+  function handleValueChange(value) {
+    setStartDate(value)
+    var compiledQuestion = createCompiledQuestionByValue(question.id, value, question.isRequired)
+    addCompiledQuestion(compiledQuestion)
+  }
+  return (
+    <DatePicker
+    showIcon
+    selected={startDate}
+    onChange={handleValueChange} //only when value has changed
+    dateFormat="dd/MM/yyyy"
+    icon="fas fa-calendar"
+    placeholderText={placeholderText}
+    peekNextMonth
+    showMonthDropdown
+    showYearDropdown
+    dropdownMode="select"
+/>
+  )
+}
+
 //-------------------------------------------------------------------------------------------------
 const NotCompiledSingleAnswer = ({
   question,
   addCompiledQuestion,
   enableNextQuestion,
+  surveyLayout
 }) => {
+
+  var radioClass="";
+  if (surveyLayout == CustomSurveyType.EORTCQLQ_C30 || surveyLayout == CustomSurveyType.EORTC_QLQ_BR23) {
+    radioClass="mb-0 w-50 d-flex justify-content-between align-items-center"
+  }
+
 
   function handleValueChange(answerId) {
     var answersId = []
     answersId.push(answerId)
     enabledChildQuestion(question.id, answerId)
-    var compiledQuestion = createCompiledQuestionByIds(question.id, answersId)
+    var compiledQuestion = createCompiledQuestionByIds(question.id, answersId, question.isRequired)
     addCompiledQuestion(compiledQuestion)
   }
 
@@ -89,14 +134,15 @@ const NotCompiledSingleAnswer = ({
     <FormGroup tag="fieldset">
       {question.answersContainer.selectableAnswers.map((answer, idx) => (
         <FormGroup key={idx} check className="my-2">
-          <Label check>
+          <Label check className={radioClass}>
+          {answer.label}
             <Input
               type="radio"
               name={question.id}
               value={answer.answerId}
               onChange={e => handleValueChange(e.target.value)}
             />{" "}
-            {answer.label}
+           
           </Label>
         </FormGroup>
       ))}
@@ -108,13 +154,14 @@ const NotCompiledMultipleAnswer = ({ question, addCompiledQuestion }) => {
   const [checkedItems, setCheckedItems] = useState([])
 
   useEffect(() => {
-    if (checkedItems && checkedItems.length > 0) {
+   // if (checkedItems && checkedItems.length > 0) {
       var compiledQuestion = createCompiledQuestionByIds(
         question.id,
-        checkedItems
+        checkedItems,
+        question.isRequired
       )
       addCompiledQuestion(compiledQuestion)
-    }
+   // }
   }, [checkedItems])
 
   function handleValueChange(value, checked) {
@@ -169,7 +216,7 @@ const NotCompiledBooleanAnswer = ({ props, question, addCompiledQuestion }) => {
 
   function handleValueChange(value) {
     setValue(value)
-    var compiledQuestion = createCompiledQuestionByValue(question.id, value)
+    var compiledQuestion = createCompiledQuestionByValue(question.id, value, question.isRequired)
     addCompiledQuestion(compiledQuestion)
   }
 
@@ -196,8 +243,9 @@ const NotCompiledBooleanAnswer = ({ props, question, addCompiledQuestion }) => {
 }
 
 const NotCompiledRatingAnswer = ({ question, addCompiledQuestion }) => {
+  console.log("question", question);
   function handleValueChange(value) {
-    var compiledQuestion = createCompiledQuestionByValue(question.id, value)
+    var compiledQuestion = createCompiledQuestionByValue(question.id, value, question.isRequired)
     addCompiledQuestion(compiledQuestion)
   }
   return (
@@ -208,6 +256,8 @@ const NotCompiledRatingAnswer = ({ question, addCompiledQuestion }) => {
           max={question.properties.max}
           minLabel={question.properties.minLabel}
           maxLabel={question.properties.maxLabel}
+          step={question.properties.step}
+          isVertical={question.properties.isVertical}
           onValueChange={handleValueChange}
         />
       </Col>
@@ -217,7 +267,7 @@ const NotCompiledRatingAnswer = ({ question, addCompiledQuestion }) => {
 
 const NotCompiledMoodAnswer = ({ question, addCompiledQuestion }) => {
   function handleValueChange(value) {
-    var compiledQuestion = createCompiledQuestionByValue(question.id, value)
+    var compiledQuestion = createCompiledQuestionByValue(question.id, value, question.isRequired)
     addCompiledQuestion(compiledQuestion)
   }
   return <MoodSelector onMoodChange={handleValueChange} />
@@ -266,7 +316,7 @@ const NotCompiledNumericAnswer = ({ props, question, addCompiledQuestion }) => {
           if (!isNaN(number)) {
             if (number >= min && number <= max) {
               setValue(enteredValue);
-              var compiledQuestion = createCompiledQuestionByValue(question.id, value)
+              var compiledQuestion = createCompiledQuestionByValue(question.id, value, question.isRequired)
               addCompiledQuestion(compiledQuestion)
               setError(false);
             } 
@@ -311,5 +361,6 @@ export {
   NotCompiledBooleanAnswer,
   NotCompiledRatingAnswer,
   NotCompiledMoodAnswer,
-  NotCompiledNumericAnswer
+  NotCompiledNumericAnswer,
+  NotCompiledDateAnswer
 }

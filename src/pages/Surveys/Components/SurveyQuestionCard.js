@@ -9,7 +9,8 @@ import {
   NotCompiledBooleanAnswer,
   NotCompiledRatingAnswer,
   NotCompiledMoodAnswer,
-  NotCompiledNumericAnswer
+  NotCompiledNumericAnswer,
+  NotCompiledDateAnswer,
 } from "./NotCompiledAnswers"
 
 const SurveyQuestionCard = ({
@@ -18,7 +19,9 @@ const SurveyQuestionCard = ({
   addCompiledQuestion,
   enableNextQuestion,
   questionVisible,
+  surveyLayout
 }) => {
+
   return (
     <Card
       style={
@@ -47,6 +50,7 @@ const SurveyQuestionCard = ({
                 <NotCompiledOpenAnswer
                   question={question}
                   addCompiledQuestion={addCompiledQuestion}
+                  props={props}
                 />
               )}
 
@@ -56,6 +60,8 @@ const SurveyQuestionCard = ({
                   enableNextQuestion={enableNextQuestion}
                   question={question}
                   addCompiledQuestion={addCompiledQuestion}
+                  surveyLayout={surveyLayout}
+                   props={props}
                 />
               )}
 
@@ -64,6 +70,7 @@ const SurveyQuestionCard = ({
                 <NotCompiledMultipleAnswer
                   question={question}
                   addCompiledQuestion={addCompiledQuestion}
+                   props={props}
                 />
               )}
 
@@ -79,6 +86,7 @@ const SurveyQuestionCard = ({
               <NotCompiledRatingAnswer
                 question={question}
                 addCompiledQuestion={addCompiledQuestion}
+                 props={props}
               />
             )}
 
@@ -86,6 +94,7 @@ const SurveyQuestionCard = ({
               <NotCompiledMoodAnswer
                 question={question}
                 addCompiledQuestion={addCompiledQuestion}
+                 props={props}
               />
             )}
 
@@ -95,6 +104,15 @@ const SurveyQuestionCard = ({
                   props={props}
                   question={question}
                   addCompiledQuestion={addCompiledQuestion}
+                />
+              )}
+               {question.type == surveyQuestionType.DATE &&
+              questionVisible && (
+                <NotCompiledDateAnswer
+                  question={question}
+                  addCompiledQuestion={addCompiledQuestion}
+                  surveyLayout={surveyLayout}
+                   props={props}
                 />
               )}
           </>

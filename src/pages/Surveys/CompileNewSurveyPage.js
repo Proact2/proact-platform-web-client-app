@@ -13,6 +13,8 @@ import {
 import { apiErrorToast, showErrorToast } from "../../helpers/toastHelper"
 import SurveyQuestionCard from "./Components/SurveyQuestionCard"
 import { SurveySuccesfulyCompiledModal } from "./Components/SurveySuccesfulyCompiledModal"
+import SurveyHeaderCard from "./Components/SurveyHeaderCard"
+import SurveyFooterCard from "./Components/SurveyFooterCard"
 
 const CompileNewSurveyPage = props => {
   const surveyId = props.match.params.id
@@ -22,6 +24,7 @@ const CompileNewSurveyPage = props => {
   const [survey, setSurvey] = useState()
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
   const [compiledQuestions, setCompiledQuestions] = useState([])
+  const [compiledRequiredQuestions, setCompiledRequiredQuestions] = useState([])
 
   useEffect(() => {
     if (environment) {
@@ -61,7 +64,27 @@ const CompileNewSurveyPage = props => {
     let surveyQuestionEnabled = survey.questions.filter(
       question => question.isVisible !== false
     )
-    return surveyQuestionEnabled.length == compiledQuestions.length
+
+    let surveyRequiredQuestions = survey.questions.filter(
+      question => question.isVisible !== false && question.isRequired === true
+    )
+
+    console.log("surveyRequiredQuestions", surveyRequiredQuestions)
+
+    console.log("compiledQuestions", compiledQuestions)
+
+    console.log("compiledRequiredQuestions", compiledRequiredQuestions)
+
+    const allRequiredAnswered =
+      compiledRequiredQuestions.length > 0 &&
+      surveyRequiredQuestions.every(requiredQ =>
+        compiledRequiredQuestions.some(
+          compiledQ => compiledQ.questionId == requiredQ.id
+        )
+      )
+    console.log("allRequiredAnswered", allRequiredAnswered)
+    return allRequiredAnswered
+    // surveyRequiredQuestions.length <= compiledQuestions.length
   }
 
   function createRequest() {
@@ -97,15 +120,50 @@ const CompileNewSurveyPage = props => {
     return items
   }
 
+  function removeCompiledRequiredQuestion(questionId) {
+    var items = compiledRequiredQuestions.slice()
+    var idx = items.findIndex(q => q.questionId == questionId)
+    if (idx != -1) {
+      items.splice(idx, 1)
+    }
+    return items
+  }
+
   function handleAddCompiledQuestion(compiledQuestion) {
+    console.log("compiledQuestion", compiledQuestion)
     var items = removeCompiledQuestion(compiledQuestion.questionId)
-    items.push(compiledQuestion)
+    if (compiledQuestion.answers.length > 0 && compiledQuestion.answers[0].value != "") {
+      items.push(compiledQuestion)
+    }
     console.log(items)
     setCompiledQuestions(items)
+
+    if (compiledQuestion.isRequired) {
+      var requiredItems = removeCompiledRequiredQuestion(
+        compiledQuestion.questionId
+      )
+      if (compiledQuestion.answers.length > 0 && compiledQuestion.answers[0].value != "") {
+        requiredItems.push(compiledQuestion)
+      }
+      console.log("requiredItems", requiredItems)
+      setCompiledRequiredQuestions(requiredItems)
+      /* const exists = compiledRequiredQuestions.some(
+        q => q.questionId === compiledQuestion.questionId
+      )
+
+      console.log("exists", exists)
+
+      if (!exists) {
+        setCompiledRequiredQuestions([
+          ...compiledRequiredQuestions,
+          compiledQuestion,
+        ])
+      } */
+    }
   }
-  
-  //Paola 19/09/2023 
-  
+
+  //Paola 19/09/2023
+
   //<--->
 
   const setQuestionCardsVisibility = data => {
@@ -185,6 +243,20 @@ const CompileNewSurveyPage = props => {
       question.isVisible = false
     }
   }
+  // Show loading spinner while survey is undefined (not loaded yet)
+  if (survey === undefined) {
+    return (
+      <Container>
+        <Breadcrumbs
+          backButtonLinkTo={"/surveys/notcompiled/mine"}
+          title={props.t("ToBeCompletedSurveysPageTitle")}
+        />
+        <LoadingSpinner />
+      </Container>
+    )
+  }
+
+  // Show empty card if survey is null or falsy (no survey to display)
   return (
     <Container>
       <Breadcrumbs
@@ -195,6 +267,7 @@ const CompileNewSurveyPage = props => {
 
       {survey ? (
         <div>
+          <SurveyHeaderCard survey={survey} props={props} />
           <Row>
             <Col xs="12">
               {survey.questions.map((question, idx) => (
@@ -205,10 +278,14 @@ const CompileNewSurveyPage = props => {
                   addCompiledQuestion={handleAddCompiledQuestion}
                   enableNextQuestion={handleEnableNextQuestion}
                   questionVisible={question.isVisible}
+                  surveyLayout={survey.customSurveyLayout}
                 />
               ))}
             </Col>
           </Row>
+          {(survey.footer || survey.footerImage) && (
+            <SurveyFooterCard survey={survey} props={props} />
+          )}
           <Row className="mb-4">
             <Col className="text-end">
               <Button
@@ -222,7 +299,13 @@ const CompileNewSurveyPage = props => {
           </Row>
         </div>
       ) : (
-        <LoadingSpinner />
+        <Card>
+          <CardBody>
+            <div className="text-center">
+              {props.t("EmptyNotComiledSurveysList")}
+            </div>
+          </CardBody>
+        </Card>
       )}
 
       <SurveySuccesfulyCompiledModal
