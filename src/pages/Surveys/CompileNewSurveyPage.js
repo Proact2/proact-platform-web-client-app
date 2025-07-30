@@ -75,13 +75,16 @@ const CompileNewSurveyPage = props => {
 
     console.log("compiledRequiredQuestions", compiledRequiredQuestions)
 
+    const hasRequiredQuestions = surveyRequiredQuestions.length > 0
+
     const allRequiredAnswered =
-      compiledRequiredQuestions.length > 0 &&
-      surveyRequiredQuestions.every(requiredQ =>
-        compiledRequiredQuestions.some(
-          compiledQ => compiledQ.questionId == requiredQ.id
-        )
-      )
+      !hasRequiredQuestions ||
+      (compiledRequiredQuestions.length > 0 &&
+        surveyRequiredQuestions.every(requiredQ =>
+          compiledRequiredQuestions.some(
+            compiledQ => compiledQ.questionId === requiredQ.id
+          )
+        ))
     console.log("allRequiredAnswered", allRequiredAnswered)
     return allRequiredAnswered
     // surveyRequiredQuestions.length <= compiledQuestions.length
@@ -132,7 +135,10 @@ const CompileNewSurveyPage = props => {
   function handleAddCompiledQuestion(compiledQuestion) {
     console.log("compiledQuestion", compiledQuestion)
     var items = removeCompiledQuestion(compiledQuestion.questionId)
-    if (compiledQuestion.answers.length > 0 && compiledQuestion.answers[0].value != "") {
+    if (
+      compiledQuestion.answers.length > 0 &&
+      compiledQuestion.answers[0].value != ""
+    ) {
       items.push(compiledQuestion)
     }
     console.log(items)
@@ -142,7 +148,10 @@ const CompileNewSurveyPage = props => {
       var requiredItems = removeCompiledRequiredQuestion(
         compiledQuestion.questionId
       )
-      if (compiledQuestion.answers.length > 0 && compiledQuestion.answers[0].value != "") {
+      if (
+        compiledQuestion.answers.length > 0 &&
+        compiledQuestion.answers[0].value != ""
+      ) {
         requiredItems.push(compiledQuestion)
       }
       console.log("requiredItems", requiredItems)
